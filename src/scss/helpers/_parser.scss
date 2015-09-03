@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/// Get operator of an expression
+///
+/// @param {String} $expression - Expression to extract operator from
+///
+/// @return {String} - Any of `>=`, `>`, `<=`, `<`, `≥`, `≤`
+///
+@function get-expression-operator($expression) {
+  @each $operator in ('>=', '>', '<=', '<', '≥', '≤') {
+    @if str-index($expression, $operator) {
+      @return $operator;
+    }
+  }
+}
