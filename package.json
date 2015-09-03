@@ -1,0 +1,67 @@
+{
+  "name": "growcss-autoprefixer",
+  "version": "0.0.1",
+  "description": "A sass autoprefixer mixin library adds vendor prefixes to rules by Can I Use.",
+  "author": {
+    "name": "Daniel Bannert",
+    "email": "d.bannert@anolilab.de"
+  },
+  "homepage": "http://growcss.com/",
+  "main": "./dist/_autoprefixer.scss",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/growcss/autoprefixer.git"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "bugs": {
+    "url": "https://github.com/growcss/autoprefixer/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "growcss-sass-config-manager": "^3.1.0",
+    "include-media": "^1.4.0"
+  },
+  "devDependencies": {
+    "bower": "~1.5.2",
+    "grunt": "^0.4.5",
+    "grunt-bump": "^0.3.1",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-cli": "^1.13.1",
+    "grunt-sassdoc": "^2.0.1",
+    "grunt-scss-lint": "^0.3.6",
+    "load-grunt-config": "^0.17.2",
+    "load-grunt-tasks": "^3.2.0",
+    "node-sass": "^3.3.2",
+    "sass-true": "^2.0.2",
+    "time-grunt": "^1.2.1"
+  },
+  "keywords": [
+    "grunt",
+    "bower",
+    "bin",
+    "development",
+    "dev",
+    "build",
+    "generator",
+    "generate",
+    "tool",
+    "media",
+    "include-media",
+    "sass",
+    "scss",
+    "sass-config-manager",
+    "growcss",
+    "autoprefixer",
+    "mixin"
+  ]
+}

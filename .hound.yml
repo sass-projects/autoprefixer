@@ -1,0 +1,10 @@
+scss:
+    config_file: .scss-lint.yml
+    exclude:
+    - "tests/specs/**"
+
+ruby:
+    enabled: false
+
+javascript:
+    enabled: false

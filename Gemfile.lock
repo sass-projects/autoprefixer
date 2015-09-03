@@ -1,0 +1,20 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    psych (2.0.0)
+    rainbow (2.0.0)
+    sass (3.4.18)
+    scss_lint (0.40.1)
+      rainbow (~> 2.0)
+      sass (~> 3.4.1)
+
+PLATFORMS
+  x64-mingw32
+
+DEPENDENCIES
+  psych (= 2.0)
+  rainbow (= 2.0)
+  scss_lint (= 0.40.1)
+
+BUNDLED WITH
+   1.10.6
