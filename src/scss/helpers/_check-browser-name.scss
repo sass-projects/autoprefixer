@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+/// Get browser data by alias or case insensitive name and throw error
+/// on unknown browser
+@function check-browser-name($list...) {
+
+}

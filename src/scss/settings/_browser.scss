@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+// What browsers will be used in `last n version`
+@include config-set("browserslist", (
+  'safari',
+  'opera',
+  'ios_saf',
+  'ie_mob',
+  'ie',
+  'edge',
+  'firefox',
+  'chrome'
+), true);
+
+/// Browser names aliases
+@include config-set("browserslist-aliases", (
+  fx:             'firefox',
+  ff:             'firefox',
+  ios:            'ios_saf',
+  explorer:       'ie',
+  blackberry:     'bb',
+  explorermobile: 'ie_mob',
+  operamini:      'op_mini',
+  operamobile:    'op_mob',
+  chromeandroid:  'and_chr',
+  firefoxandroid: 'and_ff'
+), true);
