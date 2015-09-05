@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+/// Autoprefixer
+@mixin autoprefixer() {
+
+}
+
+/// Create a alias mixin with a shorter name that passes
+/// through all the arguments to autoprefixer mixin.
+///
+/// @param {ArgList} $args
+@mixin prefixer($args...) {
+  @include autoprefixer($args...);
+}

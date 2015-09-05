@@ -1,0 +1,41 @@
+{
+  "name": "growcss-autoprefixer",
+  "version": "0.0.1",
+  "homepage": "http://growcss.com/",
+  "authors": [
+    "Daniel Bannert <d.bannert@anolilab.de>"
+  ],
+  "description": "A sass autoprefixer mixin library adds vendor prefixes to rules by Can I Use.",
+  "moduleType": [
+    "amd",
+    "node",
+    "sass"
+  ],
+  "keywords": [
+    "grunt",
+    "bower",
+    "bin",
+    "development",
+    "dev",
+    "build",
+    "generator",
+    "generate",
+    "tool",
+    "media",
+    "include-media",
+    "sass",
+    "scss",
+    "sass-config-manager",
+    "growcss",
+    "autoprefixer",
+    "mixin"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

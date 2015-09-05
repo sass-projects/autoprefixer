@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/// Selector hacks
+@include config-set("fullscreen", true, true);
+@include config-set("placeholder", true, true);
+
+/// Declaration hacks
+@include config-set("flex", true, true);
+@include config-set("order", true, true);
+@include config-set("filter", true, true);
+@include config-set("flex-flow", true, true);
+@include config-set("flex-grow", true, true);
+@include config-set("flex-wrap", true, true);
+@include config-set("appearance", true, true);
+@include config-set("align-self", true, true);
+@include config-set("flex-basis", true, true);
+@include config-set("align-items", true, true);
+@include config-set("flex-shrink", true, true);
+@include config-set("break-inside", true, true);
+@include config-set("border-image", true, true);
+@include config-set("align-content", true, true);
+@include config-set("border-radius", true, true);
+@include config-set("block-logical", true, true);
+@include config-set("inline-logical", true, true);
+@include config-set("transform-decl", true, true);
+@include config-set("flex-direction", true, true);
+@include config-set("image-rendering", true, true);
+@include config-set("justify-content", true, true);
+@include config-set("background-size", true, true);
+
+/// Value hacks
+@include config-set("gardient", true, true);
+@include config-set("pixelated", true, true);
+@include config-set("flex-values", true, true);
+@include config-set("display-flex", true, true);
+@include config-set("filter-value", true, true);
+@include config-set("fill-avalible", true, true);
+@include config-set("transform-value", true, true);

@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+/// In functions/_import-once.scss
+$imported-modules: () !global;
+
+/// This function helps making sure a module is imported once and only once.
+///
+/// @access public
+///
+/// @param {String} $module - Name of exported module
+///
+/// @example scss - Usage
+///   @if import-once(test) {
+///     .class {
+///       width: 100%;
+///     }
+///   }
+///
+/// @example css - CSS Output
+///   .class {
+///     width: 100%;
+///   }
+///
+/// @return {Bool}
+///
+/// @require $imported-modules
+@function import-once($module) {
+  @if index($imported-modules, $module) {
+    @warn "Module `#{$module}` has already been imported.";
+    @return false;
+  }
+
+  $imported-modules: append($imported-modules, $module) !global;
+  @return true;
+}

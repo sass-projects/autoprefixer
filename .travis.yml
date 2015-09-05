@@ -1,0 +1,33 @@
+sudo: false
+cache:
+  directories:
+    - bundler
+
+language: node_js
+
+node_js:
+  - "0.12"
+  - "0.10"
+
+script:
+  - grunt test -v --stack -d
+
+before_install:
+  - npm install -g grunt-cli
+  - gem install bundler
+  - bundle install
+
+before_script:
+  - npm install
+
+matrix:
+  fast_finish: true
+
+# Gitter notifications
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/c11b863b8d3c8d76e29f
+    on_success: change
+    on_failure: always
+    on_start: false

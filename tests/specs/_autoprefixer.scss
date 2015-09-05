@@ -1,0 +1,673 @@
+//      A dot-syntax configuration (Map) library in Sass
+//
+//                http://growcss.de
+//
+//         Authors: Daniel Bannert (@anolilab)
+//
+//      This project is licensed under the terms of the MIT license
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/// Sets a value to a configuration path
+///
+/// @param {String} $key     The configuration key
+/// @param {*|Null} $value   The value to set
+/// @param {Bool}   $default Whether the configuration is default
+@mixin config-set($key, $value, $default: false) {
+  $config: config-set($key, $value, $default);
+}
+
+/// Gets a value to/from a configuration path
+///
+/// @param {String} $key     The configuration path
+/// @param {Bool}   $default Whether the configuration is default
+@mixin config-get($key, $default: false) {
+  $config: config-get($key, $default);
+}
+
+/// Remove settings
+///
+/// @param {String} $settings Configuration path
+/// @param {Bool}   $default  Whether the configuration is default
+@mixin config-reset($settings, $default:false) {
+  $config-reset: config-reset($settings);
+}
+
+/// The delimiter of configuration path
+///
+/// @access private
+$config-delimiter: "." !default;
+
+/// The configuration storage
+///
+/// @access private
+$config-attr: () !default;
+
+/// The default configuration storage
+///
+/// @access private
+$config-default: () !default;
+
+/// Namespace for settings
+///
+/// @access public
+$config-namespace: "" !default;
+
+/// Return list-map from `$list` and ensure input list-map is list-of-lists
+///
+/// @access public
+///
+/// @param  {List} $list
+///
+/// @return {List}
+@function list-map-check($list) {
+  @if length($list) == 2 and length(nth($list, 1)) == 1 {
+    @return append((), $list, "comma");
+  }
+
+  @return $list;
+}
+
+/// Extracts a slice of a list
+///
+/// @access private
+///
+/// @param  {List}   $list  The list to extract
+/// @param  {Number} $start The start index to extract
+/// @param  {Number} $end   The end index to extract
+///
+/// @return {List}          The extracted list
+@function list-slice($list, $start: 1, $end: length($list)) {
+  $output: ();
+
+  @if $start >= 1 and $end >= $start {
+    @for $i from $start through $end {
+      $output: append($output, nth($list, $i));
+    }
+  }
+
+  @return $output;
+}
+
+/// Sets a value to a Map by the map path
+///
+/// @access private
+///
+/// @param  {Map}    $map   The Map
+/// @param  {String} $path  The map path
+/// @param  {*|Null} $value The value to set
+///
+/// @return {Map}           A new Map
+@function config-map-set($map, $path, $value) {
+  $map: list-map-check($map);
+  $keys: str-split($path, $config-delimiter);
+  $length: length($keys);
+
+  $result: (nth($keys, $length): $value);
+
+  @if $length > 1 {
+    @for $i from 1 through $length - 1 {
+      $path: "";
+      $key: nth($keys, 1);
+
+      $j: $length - $i;
+      $key: nth($keys, $j);
+
+      $path: str-join(list-slice($keys, 1, $j), $config-delimiter);
+
+      @if config-map-has($map, $path) {
+        $value: config-map-get($map, $path);
+
+        @if type-of($value) == "map" {
+          $result: config-map-merge(($key: $value), ($key: $result));
+        } @else {
+          $result: ($key: $result);
+        }
+      } @else {
+        $result: ($key: $result);
+      }
+    }
+  }
+
+  $map: config-map-merge($map, $result);
+
+  @return $map;
+}
+
+/// Gets a value from a Map by the map path
+///
+/// @access private
+///
+/// @param  {Map}    $map  The Map
+/// @param  {String} $path The map path
+///
+/// @return {*}            The value of the map path
+@function config-map-get($map, $path) {
+  $keys: str-split($path, $config-delimiter);
+  $value: list-map-check($map);
+
+  @each $key in $keys {
+    @if type-of($value) != "map" or not map-has-key($value, $key) {
+      @warn "The path '#{$path}' doesn\'t exist.";
+
+      @return null;
+    }
+
+    $value: map-get($value, $key);
+  }
+
+  @return $value;
+}
+
+/// Returns whether the key of a map path exists in a Map
+///
+/// @access private
+///
+/// @param  {Map}    $map The Map
+/// @param  {String} $key The map path
+///
+/// @return {Bool}       True if the map path has a value, otherwise false
+@function config-map-has($map, $key) {
+  $keys: str-split($key, $config-delimiter);
+  $value: list-map-check($map);
+
+  @each $key in $keys {
+    @if type-of($value) != "map" or not map-has-key($value, $key) {
+      @return false;
+    }
+
+    $value: map-get($value, $key);
+  }
+
+  @return true;
+}
+
+/// Recursively merges one or more maps
+///
+/// @access private
+///
+/// @param  {Map} $maps... The map(s) to merge
+///
+/// @return {Map}          The merged map
+@function config-map-merge($maps...) {
+  $result: nth($maps, 1);
+
+  @for $i from 1 through length($maps) - 1 {
+    @each $key, $value in nth($maps, $i + 1) {
+      @if type-of($result) != "map" {
+        $result: ($key: $value);
+      }
+
+      @if type-of($value) == "map" {
+        $value: config-map-merge(map-get($result, $key), $value);
+      }
+
+      @if $key != null {
+        $result: map-merge($result, ($key: $value));
+      }
+    }
+  }
+
+  @return $result;
+}
+
+/// Joins list elements with a string
+///
+/// @access private
+///
+/// @param  {List}   $list The list to join
+/// @param  {String} $glue The glue string to join list elements
+///
+/// @return {String} The joined string
+@function str-join($list, $glue: "") {
+  $result: "";
+
+  @if length($list) == 0 {
+    @return $result;
+  }
+
+  @if length($list) > 1 {
+    @for $i from 1 through length($list) - 1 {
+      $result: $result + nth($list, $i) + $glue;
+    }
+  }
+
+  $result: $result + nth($list, length($list));
+
+  @return $result;
+}
+
+/// Splits a string by a delimiter
+///
+/// @access private
+///
+/// @param  {String} $string    The string to split
+/// @param  {String} $delimiter The boundary string to split the string
+///
+/// @return {List}              The splitted list
+@function str-split($string, $delimiter: "") {
+  $result: ();
+  $length: str-length($string);
+
+  @if str-length($delimiter) == 0 {
+    @for $i from 1 through $length {
+      $result: append($result, str-slice($string, $i, $i));
+    }
+
+    @return $result;
+  }
+
+  $break: false;
+
+  @while not $break {
+    $index: str-index($string, $delimiter);
+
+    @if not $index or $index == 0 {
+      $break: true;
+    } @else {
+      $part: if($index != 1, str-slice($string, 1, $index - 1), "");
+      $result: append($result, $part);
+      $string: str-slice($string, $index + str-length($delimiter));
+    }
+  }
+
+  @return append($result, $string);
+}
+
+/// Gets a value to/from a configuration path
+///
+/// @param {String} $key      The configuration path
+/// @param {Bool}   $default  Whether the configuration is default
+///
+/// @return         {*}       The value of the configuration path
+@function config-get($key, $default: false) {
+  @if $default {
+    @if config-map-has($config-default, $key) {
+      @return config-map-get($config-default, $key);
+    }
+  } @else {
+    @if config-map-has($config-attr, $key) {
+      @return config-map-get($config-attr, $key);
+    } @else if config-map-has($config-default, $key) {
+      @return config-map-get($config-default, $key);
+    }
+  }
+
+  @warn "The key '#{$key}' doesn\'t exist.";
+
+  @return null;
+}
+
+/// Returns whether a configuration path exists
+///
+/// @param  {String} $key The configuration path
+///
+/// @return {Bool}        True if the configuration path has a value, otherwise false
+@function config-has($key) {
+  $key: $config-namespace + $key;
+
+  @if config-map-has($config-attr, $key) or config-map-has($config-default, $key) {
+    @return true;
+  }
+
+  @return false;
+}
+
+/// Remove settings
+///
+/// @param  {String} $settings Configuration path
+/// @param  {Bool}   $default  Whether the configuration is default
+///
+/// @return {Bool}             True if the configuration path is removed.
+@function config-reset($settings, $default: false) {
+  $settings: $config-namespace + $settings;
+
+  @if length($settings) == 1 {
+    $settings: nth($settings, 1);
+  }
+
+  @each $setting in $settings {
+    @if ($default) {
+      $config-default: map-remove($config-default, $setting) !global;
+    } @else {
+      $config-attr: map-remove($config-attr, $setting) !global;
+    }
+  }
+
+  @return true;
+}
+
+/// Sets a value to/from a configuration path
+///
+/// @param {String} $key     The configuration key
+/// @param {*}      $value   The value to set
+/// @param {Bool}   $default Whether the configuration is default
+///
+/// @return         {*}      The value of the configuration path
+@function config-set($key, $value, $default: false) {
+  $key: $config-namespace + $key;
+
+  @if $default {
+    @if config-map-has($config-default, $key) {
+      $value: config-map-get($config-default, $key);
+    } @else {
+      $config-default: config-map-set($config-default, $key, $value) !global;
+    }
+  } @else {
+    $config-attr: config-map-set($config-attr, $key, $value) !global;
+  }
+
+  @return $value;
+}
+
+/// Default for supported browser
+@include config-set("browsers", "> 1%, last 2 versions, Firefox ESR", true);
+
+// What browsers will be used in `last n version`
+@include config-set("browserslist-major", (
+  "safari",
+  "opera",
+  "ios_saf",
+  "ie_mob",
+  "ie",
+  "edge",
+  "firefox",
+  "chrome"
+), true);
+
+/// Browser names aliases
+@include config-set("browserslist-aliases", (
+  fx:             "firefox",
+  ff:             "firefox",
+  ios:            "ios_saf",
+  explorer:       "ie",
+  blackberry:     "bb",
+  explorermobile: "ie_mob",
+  operamini:      "op_mini",
+  operamobile:    "op_mob",
+  chromeandroid:  "and_chr",
+  firefoxandroid: "and_ff",
+  ucforandroid:   "and_uc"
+), true);
+
+// Aliases ot work with joined versions like `ios_saf 7.0-7.1`
+@include config-set("browserslist-version-aliases", (), true);
+
+@include config-set("declaration.prefixed", "", true);
+@include config-set("declaration.normalize", "", true);
+
+
+/// Selector hacks
+@include config-set("fullscreen", true, true);
+@include config-set("placeholder", true, true);
+
+/// Declaration hacks
+@include config-set("flex", true, true);
+@include config-set("order", true, true);
+@include config-set("filter", true, true);
+@include config-set("flex-flow", true, true);
+@include config-set("flex-grow", true, true);
+@include config-set("flex-wrap", true, true);
+@include config-set("appearance", true, true);
+@include config-set("align-self", true, true);
+@include config-set("flex-basis", true, true);
+@include config-set("align-items", true, true);
+@include config-set("flex-shrink", true, true);
+@include config-set("break-inside", true, true);
+@include config-set("border-image", true, true);
+@include config-set("align-content", true, true);
+@include config-set("border-radius", true, true);
+@include config-set("block-logical", true, true);
+@include config-set("inline-logical", true, true);
+@include config-set("transform-decl", true, true);
+@include config-set("flex-direction", true, true);
+@include config-set("image-rendering", true, true);
+@include config-set("justify-content", true, true);
+@include config-set("background-size", true, true);
+
+/// Value hacks
+@include config-set("gardient", true, true);
+@include config-set("pixelated", true, true);
+@include config-set("flex-values", true, true);
+@include config-set("display-flex", true, true);
+@include config-set("filter-value", true, true);
+@include config-set("fill-avalible", true, true);
+@include config-set("transform-value", true, true);
+
+@if import-once("align-content") {
+  @function align-content ($prefix) {
+    $old-values: (
+      'flex-end':      'end',
+      'flex-start':    'start',
+      'space-between': 'justify',
+      'space-around':  'distribute',
+    );
+  }
+
+}
+
+@if import-once("align-items") {
+
+}
+
+@if import-once("align-self") {
+
+}
+
+@if import-once("appearance") {
+
+}
+
+@if import-once("background-size") {
+
+}
+
+@if import-once("block-logical") {
+
+}
+
+@if import-once("border-image") {
+
+}
+
+@if import-once("border-radius") {
+
+}
+
+@if import-once("break-props") {
+
+}
+
+@if import-once("cross-fade") {
+
+}
+
+@if import-once("display-flex") {
+
+}
+
+@if import-once("fill-available") {
+
+}
+
+@if import-once("fiter-value") {
+
+}
+
+@if import-once("fiter") {
+
+}
+
+@if import-once("flex-basis") {
+
+}
+
+@if import-once("flex-direction") {
+
+}
+
+@if import-once("flex-flow") {
+
+}
+
+@if import-once("flex-grow") {
+
+}
+
+@if import-once("flex-shrink") {
+
+}
+
+@if import-once("flex-spec") {
+  @function flex-spec($prefix) {
+    $spec: "";
+
+    @if $prefix == "-webkit- 2009" or $prefix == "-moz-" {
+      $spec: 2009;
+    } @else if $prefix == "-ms-" {
+      $spec: 2012;
+    } @else if $prefix == "-webkit-" {
+      $spec: "final";
+    }
+
+    @if $prefix == "-webkit- 2009" {
+      $prefix: "-webkit-";
+    }
+
+    @return ($spec, $prefix);
+  }
+}
+
+@if import-once("flex-values") {
+
+}
+
+@if import-once("flex-wrap") {
+
+}
+
+@if import-once("flex") {
+
+}
+
+@if import-once("fullscreen") {
+
+}
+
+@if import-once("gradient") {
+
+}
+
+@if import-once("image-rendering") {
+
+}
+
+@if import-once("image-set") {
+
+}
+
+@if import-once("inline-logical") {
+
+}
+
+@if import-once("justify-content") {
+
+}
+
+@if import-once("mask-border") {
+
+}
+
+@if import-once("order") {
+
+}
+
+@if import-once("pixelated") {
+
+}
+
+@if import-once("placeholder") {
+
+}
+
+@if import-once("transform-decl") {
+
+}
+
+@if import-once("transform-value") {
+
+}
+
+/// Get browser data by alias or case insensitive name and throw error
+/// on unknown browser
+@if import-once("check-browser-name") {
+  @function check-browser-name($list...) {
+
+  }
+}
+/// Get browser data by alias or case insensitive name
+@if import-once("get-browser-by-name") {
+  @function get-browser-by-name($list...) {
+
+  }
+}
+
+@if import-once("declaration") {
+  @function prefixed($prop, $prefix) {
+    $set: config-set("declaration.prefixed", $prefix + $prop);
+    @return $prefix + $prop;
+  }
+
+  @function normalize($prop) {
+    $set: config-set("declaration.normalize", $prop);
+    @return $prop;
+  }
+}
+
+/// In functions/_import-once.scss
+$imported-modules: () !global;
+
+/// This function helps making sure a module is imported once and only once.
+///
+/// @access public
+///
+/// @param {String} $module - Name of exported module
+///
+/// @example scss - Usage
+///   @if import-once(test) {
+///     .class {
+///       width: 100%;
+///     }
+///   }
+///
+/// @example css - CSS Output
+///   .class {
+///     width: 100%;
+///   }
+///
+/// @return {Bool}
+///
+/// @require $imported-modules
+@function import-once($module) {
+  @if index($imported-modules, $module) {
+    @warn "Module `#{$module}` has already been imported.";
+    @return false;
+  }
+
+  $imported-modules: append($imported-modules, $module) !global;
+  @return true;
+}
+
+
+/// Get operator of an expression
+///
+/// @param {String} $expression - Expression to extract operator from
+///
+/// @return {String} - Any of `>=`, `>`, `<=`, `<`, `≥`, `≤`
+///
+@function get-expression-operator($expression) {
+  @each $operator in (">=", ">", "<=", "<", "≥", "≤") {
+    @if str-index($expression, $operator) {
+      @return $operator;
+    }
+  }
+}
