@@ -7,7 +7,7 @@
 /// @return {String} - Any of `>=`, `>`, `<=`, `<`, `≥`, `≤`
 ///
 @function get-expression-operator($expression) {
-  @each $operator in ('>=', '>', '<=', '<', '≥', '≤') {
+  @each $operator in (">=", ">", "<=", "<", "≥", "≤") {
     @if str-index($expression, $operator) {
       @return $operator;
     }

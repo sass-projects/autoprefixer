@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
 @if import-once("flex-spec") {
+  @function flex-spec($prefix) {
+      $spec: "";
 
+      @if $prefix == "-webkit- 2009" or $prefix == "-moz-" {
+        $spec: 2009;
+      } @else if $prefix == "-ms-" {
+        $spec: 2012;
+      } @else if $prefix == "-webkit-" {
+        $spec: "final";
+      }
+
+      @if $prefix == "-webkit- 2009" {
+        $prefix: "-webkit-";
+      }
+
+      @return ($spec, $prefix);
+  }
 }

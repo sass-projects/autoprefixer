@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+@if import-once("declaration") {
+  @function prefixed($prop, $prefix) {
+    $set: config-set("declaration.prefixed", $prefix + $prop);
+    @return $prefix + $prop;
+  }
+
+  @function normalize($prop) {
+    $set: config-set("declaration.normalize", $prop);
+    @return $prop;
+  }
+}

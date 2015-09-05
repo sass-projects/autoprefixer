@@ -3,6 +3,8 @@
 @import "autoprefixer";
 
 // Import autoprefixer
-@import "scss/settings/browser.tests";
+@import "scss/hacks/flex-spec.test";
+
+@import "scss/settings/browser.test";
 
 @import "scss/autoprefixer.tests";

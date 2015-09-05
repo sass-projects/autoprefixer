@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
 @if import-once("align-content") {
+  @function align-content ($prefix) {
+    $old-values: (
+      'flex-end':      'end',
+      'flex-start':    'start',
+      'space-between': 'justify',
+      'space-around':  'distribute',
+    );
+  }
 
 }

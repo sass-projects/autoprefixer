@@ -1,0 +1,36 @@
+@include test-module("flex-spec") {
+  @include test("flex-spec should output 2009 if '-webkit- 2009' is set as prefix.") {
+    $expected: (2009, "-webkit-");
+    $source: flex-spec("-webkit- 2009");
+
+    @include assert-equal($source, $expected, "should be 2009 and -webkit-.");
+  }
+
+  @include test("flex-spec should output 2009 if '-moz-' is set as prefix.") {
+    $expected: (2009, "-moz-");
+    $source: flex-spec("-moz-");
+
+    @include assert-equal($source, $expected, "should be 2009 and -moz-.");
+  }
+
+  @include test("flex-spec should output 2012 if '-ms-' is set as prefix.") {
+    $expected: (2012, "-ms-");
+    $source: flex-spec("-ms-");
+
+    @include assert-equal($source, $expected, "should be 2012 and -ms-.");
+  }
+
+  @include test("flex-spec should output final if '-webkit-' is set as prefix.") {
+    $expected: ("final", "-webkit-");
+    $source: flex-spec("-webkit-");
+
+    @include assert-equal($source, $expected, "should be final and -webkit-.");
+  }
+
+  @include test("flex-spec should output empty string for spec if prefix is unknown.") {
+    $expected: ("", "-o-");
+    $source: flex-spec("-o-");
+
+    @include assert-equal($source, $expected, "should be empty string and -o-.");
+  }
+}

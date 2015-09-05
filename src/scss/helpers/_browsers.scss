@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/// Get browser data by alias or case insensitive name and throw error
+/// on unknown browser
+@if import-once("check-browser-name") {
+  @function check-browser-name($list...) {
+
+  }
+}
+/// Get browser data by alias or case insensitive name
+@if import-once("get-browser-by-name") {
+  @function get-browser-by-name($list...) {
+
+  }
+}

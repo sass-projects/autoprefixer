@@ -392,6 +392,10 @@ $config-namespace: "" !default;
 // Aliases ot work with joined versions like `ios_saf 7.0-7.1`
 @include config-set("browserslist-version-aliases", (), true);
 
+@include config-set("declaration.prefixed", "", true);
+@include config-set("declaration.normalize", "", true);
+
+
 /// Selector hacks
 @include config-set("fullscreen", true, true);
 @include config-set("placeholder", true, true);
@@ -430,6 +434,14 @@ $config-namespace: "" !default;
 @include config-set("transform-value", true, true);
 
 @if import-once("align-content") {
+  @function align-content ($prefix) {
+    $old-values: (
+      'flex-end':      'end',
+      'flex-start':    'start',
+      'space-between': 'justify',
+      'space-around':  'distribute',
+    );
+  }
 
 }
 
@@ -506,7 +518,23 @@ $config-namespace: "" !default;
 }
 
 @if import-once("flex-spec") {
+  @function flex-spec($prefix) {
+      $spec: "";
 
+      @if $prefix == "-webkit- 2009" or $prefix == "-moz-" {
+        $spec: 2009;
+      } @else if $prefix == "-ms-" {
+        $spec: 2012;
+      } @else if $prefix == "-webkit-" {
+        $spec: "final";
+      }
+
+      @if $prefix == "-webkit- 2009" {
+        $prefix: "-webkit-";
+      }
+
+      @return ($spec, $prefix);
+  }
 }
 
 @if import-once("flex-values") {
@@ -571,13 +599,28 @@ $config-namespace: "" !default;
 
 /// Get browser data by alias or case insensitive name and throw error
 /// on unknown browser
-@function check-browser-name($list...) {
+@if import-once("check-browser-name") {
+  @function check-browser-name($list...) {
 
+  }
+}
+/// Get browser data by alias or case insensitive name
+@if import-once("get-browser-by-name") {
+  @function get-browser-by-name($list...) {
+
+  }
 }
 
-/// Get browser data by alias or case insensitive name
-@function get-browser-by-name($list...) {
+@if import-once("declaration") {
+  @function prefixed($prop, $prefix) {
+    $set: config-set("declaration.prefixed", $prefix + $prop);
+    @return $prefix + $prop;
+  }
 
+  @function normalize($prop) {
+    $set: config-set("declaration.normalize", $prop);
+    @return $prop;
+  }
 }
 
 /// In functions/_import-once.scss
@@ -622,7 +665,7 @@ $imported-modules: () !global;
 /// @return {String} - Any of `>=`, `>`, `<=`, `<`, `≥`, `≤`
 ///
 @function get-expression-operator($expression) {
-  @each $operator in ('>=', '>', '<=', '<', '≥', '≤') {
+  @each $operator in (">=", ">", "<=", "<", "≥", "≤") {
     @if str-index($expression, $operator) {
       @return $operator;
     }
