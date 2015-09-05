@@ -519,21 +519,21 @@ $config-namespace: "" !default;
 
 @if import-once("flex-spec") {
   @function flex-spec($prefix) {
-      $spec: "";
+    $spec: "";
 
-      @if $prefix == "-webkit- 2009" or $prefix == "-moz-" {
-        $spec: 2009;
-      } @else if $prefix == "-ms-" {
-        $spec: 2012;
-      } @else if $prefix == "-webkit-" {
-        $spec: "final";
-      }
+    @if $prefix == "-webkit- 2009" or $prefix == "-moz-" {
+      $spec: 2009;
+    } @else if $prefix == "-ms-" {
+      $spec: 2012;
+    } @else if $prefix == "-webkit-" {
+      $spec: "final";
+    }
 
-      @if $prefix == "-webkit- 2009" {
-        $prefix: "-webkit-";
-      }
+    @if $prefix == "-webkit- 2009" {
+      $prefix: "-webkit-";
+    }
 
-      @return ($spec, $prefix);
+    @return ($spec, $prefix);
   }
 }
 
