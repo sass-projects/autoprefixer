@@ -29,3 +29,6 @@
   firefoxandroid: "and_ff",
   ucforandroid:   "and_uc"
 ), true);
+
+// Aliases ot work with joined versions like `ios_saf 7.0-7.1`
+@include config-set("browserslist-version-aliases", (), true);

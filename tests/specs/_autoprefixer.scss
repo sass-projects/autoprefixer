@@ -389,6 +389,8 @@ $config-namespace: "" !default;
   ucforandroid:   "and_uc"
 ), true);
 
+// Aliases ot work with joined versions like `ios_saf 7.0-7.1`
+@include config-set("browserslist-version-aliases", (), true);
 
 /// Selector hacks
 @include config-set("fullscreen", true, true);
@@ -611,6 +613,7 @@ $imported-modules: () !global;
   $imported-modules: append($imported-modules, $module) !global;
   @return true;
 }
+
 
 /// Get operator of an expression
 ///

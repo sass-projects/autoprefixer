@@ -34,7 +34,8 @@
       operamini:      "op_mini",
       operamobile:    "op_mob",
       chromeandroid:  "and_chr",
-      firefoxandroid: "and_ff"
+      firefoxandroid: "and_ff",
+      ucforandroid:   "and_uc"
     );
 
     $source: config-get("browserslist-aliases");
