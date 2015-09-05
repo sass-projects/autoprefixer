@@ -1,0 +1,44 @@
+@include test-module("browser-settings") {
+  @include test("config 'browsers' should output default settings.") {
+    $expected: "> 1%, last 2 versions, Firefox ESR";
+    $source: config-get("browsers");
+
+    @include assert-equal($source, $expected, "should be '> 1%, last 2 versions, Firefox ESR'.");
+  }
+
+  @include test("config 'browserslist-major' should output browsers list settings.") {
+    $expected: (
+      "safari",
+      "opera",
+      "ios_saf",
+      "ie_mob",
+      "ie",
+      "edge",
+      "firefox",
+      "chrome"
+    );
+
+    $source: config-get("browserslist-major");
+
+    @include assert-equal($source, $expected, "should be '$expected' list.");
+  }
+
+  @include test("config 'browserslist-aliases' should output browsers aliases settings.") {
+    $expected: (
+      fx:             "firefox",
+      ff:             "firefox",
+      ios:            "ios_saf",
+      explorer:       "ie",
+      blackberry:     "bb",
+      explorermobile: "ie_mob",
+      operamini:      "op_mini",
+      operamobile:    "op_mob",
+      chromeandroid:  "and_chr",
+      firefoxandroid: "and_ff"
+    );
+
+    $source: config-get("browserslist-aliases");
+
+    @include assert-equal($source, $expected, "should be '$expected' list.");
+  }
+}

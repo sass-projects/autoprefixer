@@ -1,6 +1,8 @@
 @import "true";
 
+@import "autoprefixer";
+
 // Import autoprefixer
-@import "autoprefixer.tests";
+@import "scss/settings/browser.tests";
 
-
+@import "scss/autoprefixer.tests";

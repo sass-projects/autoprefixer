@@ -4,9 +4,8 @@
 var fs = require('fs'),
   srcFiles = [
     'src/scss/settings/**/*.scss',
-    'src/scss/functions/**/*.scss',
-    'src/scss/helpers/**/*.scss',
-    'src/scss/components/**/*.scss'
+    'src/scss/hacks/**/*.scss',
+    'src/scss/helpers/**/*.scss'
   ],
   // Replace all 'use strict' statements in the code with a single one at the top
   processFunc = function(src, filepath) {
@@ -33,6 +32,6 @@ module.exports = {
       'node_modules/growcss-sass-config-manager/dist/*.scss',
       'node_modules/include-media/dist/*.scss',
     ].concat(srcFiles),
-    dest: 'tests/specs/_autoprefixer.tests.scss',
+    dest: 'tests/specs/_autoprefixer.scss',
   }
 };
