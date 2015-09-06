@@ -27,8 +27,7 @@
   },
   "dependencies": {
     "caniuse-db": "^1.0.30000291",
-    "growcss-sass-config-manager": "^3.1.0",
-    "sassdash": "^0.5.3"
+    "growcss-sass-config-manager": "^3.1.0"
   },
   "devDependencies": {
     "bower": "~1.5.2",

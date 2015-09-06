@@ -1,0 +1,81 @@
+@include test-module("align-content") {
+  @include test("test if align-content 'flex-start' works correct.") {
+    @include assert("Outputs prefixes for 'flex-start'") {
+      @include input {
+        @include align-content("-webkit-", "flex-start");
+        @include align-content("-ms-", "flex-start");
+        @include align-content("", "flex-start");
+      }
+
+      @include expect {
+        -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+        align-content: flex-start;
+      }
+    }
+  }
+
+  @include test("test if align-content 'flex-end' works correct.") {
+    @include assert("Outputs prefixes for 'flex-end'") {
+      @include input {
+        @include align-content("-webkit-", "flex-end");
+        @include align-content("-ms-", "flex-end");
+        @include align-content("", "flex-end");
+      }
+
+      @include expect {
+        -webkit-align-content: flex-end;
+        -ms-flex-line-pack: end;
+        align-content: flex-end;
+      }
+    }
+  }
+
+  @include test("test if align-content 'center' works correct.") {
+    @include assert("Outputs prefixes for 'center'") {
+      @include input {
+        @include align-content("-webkit-", "center");
+        @include align-content("-ms-", "center");
+        @include align-content("", "center");
+      }
+
+      @include expect {
+        -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+      }
+    }
+  }
+
+  @include test("test if align-content 'space-between' works correct.") {
+    @include assert("Outputs prefixes for 'space-between'") {
+      @include input {
+        @include align-content("-webkit-", "space-between");
+        @include align-content("-ms-", "space-between");
+        @include align-content("", "space-between");
+      }
+
+      @include expect {
+        -webkit-align-content: space-between;
+        -ms-flex-line-pack: justify;
+        align-content: space-between;
+      }
+    }
+  }
+
+  @include test("test if align-content 'space-around' works correct.") {
+    @include assert("Outputs prefixes for 'space-around'") {
+      @include input {
+        @include align-content("-webkit-", "space-around");
+        @include align-content("-ms-", "space-around");
+        @include align-content("", "space-around");
+      }
+
+      @include expect {
+        -webkit-align-content: space-around;
+        -ms-flex-line-pack: distribute;
+        align-content: space-around;
+      }
+    }
+  }
+}

@@ -434,15 +434,34 @@ $config-namespace: "" !default;
 @include config-set("transform-value", true, true);
 
 @if import-once("align-content") {
-  @function align-content ($prefix) {
+  @mixin align-content ($prefix, $value) {
+    $names: ("align-content", "flex-line-pack");
+
+    $list: flex-spec($prefix);
+
     $old-values: (
       'flex-end':      'end',
       'flex-start':    'start',
       'space-between': 'justify',
       'space-around':  'distribute',
     );
-  }
 
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2012 {
+      $prefixed: $prefix + "flex-line-pack";
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    } @else if $spec == "final" {
+      $prefixed: $prefix + "align-content";
+    } @else {
+      $prefixed: "align-content";
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("align-items") {
@@ -608,18 +627,6 @@ $config-namespace: "" !default;
 @if import-once("get-browser-by-name") {
   @function get-browser-by-name($list...) {
 
-  }
-}
-
-@if import-once("declaration") {
-  @function prefixed($prop, $prefix) {
-    $set: config-set("declaration.prefixed", $prefix + $prop);
-    @return $prefix + $prop;
-  }
-
-  @function normalize($prop) {
-    $set: config-set("declaration.normalize", $prop);
-    @return $prop;
   }
 }
 
