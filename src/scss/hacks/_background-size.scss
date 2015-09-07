@@ -4,15 +4,11 @@
   @mixin background-size($prefix, $value) {
     $names: ("background-size");
 
-    @if $value == none {
-      $prefixed: $prefix + "appearance";
-    } @else {
-      $prefixed: "appearance";
-    }
+    $prefixed: $prefix + "background-size";
 
     // Duplication parameter for -webkit- browsers
     @if $prefix == "-webkit-" and $value != "contain" and $value != "cover" {
-
+      $value: $value + " " + $value;
     }
 
     #{$prefixed}: unquote($value);

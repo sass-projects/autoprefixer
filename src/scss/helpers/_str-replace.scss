@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+/// Replace in a string
+///
+/// @param {String}  $string    String that you want to replace
+/// @param {String}  $substr    String that is to be replaced by `$newsubstr`
+/// @param {String}  $newsubstr String that replaces `$substr`
+/// @param {Number*} $all       Flag for replaceing all (1+) or not (0)
+///
+/// @return {String}
+@function str-replace($string, $substr, $newsubstr, $all: 0) {
+  $string: unquote($string);
+  $substr: unquote($substr);
+  $newsubstr: unquote($newsubstr);
+
+  $position-found: str-index($string, $substr);
+  $processed: ();
+
+  @while ($position-found and $position-found > 0) {
+    $length-substr: str-length($substr);
+
+    @if (1 != $position-found) {
+      $processed: append($processed, str-slice($string, 0, $position-found - 1));
+    }
+
+    $processed: append($processed, $newsubstr);
+    $string: str-slice($string, $position-found + $length-substr);
+
+    $position-found: 0;
+
+    @if ($all > 0) {
+      $position-found: str-index($string, $substr);
+    }
+  }
+
+  $processed: append($processed, $string);
+  $string: "";
+
+  @each $s in $processed {
+    $string: #{$string}#{$s};
+  }
+
+  @return $string;
+}

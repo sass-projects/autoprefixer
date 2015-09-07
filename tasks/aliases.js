@@ -51,10 +51,12 @@ module.exports = {
     'json_to_sass:feature-css-image-set',
     'json_to_sass:feature-css-writing-mode',
     'json_to_sass:feature-css-cross-fade',
-    'string-replace:precompiled'
+    'string-replace:precompiled',
+    'clean:precompiled',
       // 'json_to_sass:data',
   ],
   'default': [
+      'precompile-caniuse',
       'test',
       'concat:dist',
       'sassdoc'

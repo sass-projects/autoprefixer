@@ -8,7 +8,7 @@ module.exports = {
     },
     options: {
       replacements: [{
-        pattern: /\$+(categories|stats|bugs|links|title|notes_by_num)+\:+\((..*)\)+;/gmi,
+        pattern: /\$+(categories|bugs|links|title|notes_by_num)+\:+\((..*)\)+;/gmi,
         replacement: ''
       },
       {

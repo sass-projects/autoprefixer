@@ -1,0 +1,23 @@
+@include test-module("str-replace") {
+  @include test("str-replace should replace a string.") {
+    $expected: "lprem ipsum dplpr sit amet";
+    $source: str-replace("lorem ipsum dolor sit amet", "o", "p", 1);
+
+    @include assert-equal($source, $expected, "should be 2009 and -webkit-.");
+
+    $expected: "lprem ipsum dolor sit amet";
+    $source: str-replace("lorem ipsum dolor sit amet", "o", "p", 0);
+
+    @include assert-equal($source, $expected, "should be 2009 and -webkit-.");
+
+    $expected: "Lorem ipsum dolor sit amet";
+    $source: str-replace("lorem ipsum dolor sit amet", "l", "L");
+
+    @include assert-equal($source, $expected, "should be 2009 and -webkit-.");
+
+    $expected: "Abus ipsum dolor sit amet";
+    $source: str-replace("lorem ipsum dolor sit amet", "lorem", "Abus");
+
+    @include assert-equal($source, $expected, "should be 2009 and -webkit-.");
+  }
+}
