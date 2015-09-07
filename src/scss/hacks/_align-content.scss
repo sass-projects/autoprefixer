@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 @if import-once("align-content") {
-  @mixin align-content ($prefix, $value) {
+  @mixin align-content($prefix, $value) {
     $names: ("align-content", "flex-line-pack");
 
     $list: flex-spec($prefix);

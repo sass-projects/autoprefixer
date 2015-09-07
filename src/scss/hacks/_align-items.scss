@@ -1,5 +1,33 @@
 @charset "UTF-8";
 
 @if import-once("align-items") {
+  @mixin align-items($prefix, $value) {
+    $names: ("align-items", "flex-align", "box-align");
 
+    $list: flex-spec($prefix);
+
+    $old-values: (
+      "flex-end":   "end",
+      "flex-start": "start",
+    );
+
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2009 {
+      $prefixed: $prefix + "box-align";
+    } @else if $spec == "2012" {
+      $prefixed: $prefix + "flex-align";
+    } @else {
+      $prefixed: $prefix + "align-items";
+    }
+
+    @if ($spec == 2009 or $spec == 2012) {
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

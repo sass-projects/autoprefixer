@@ -1,0 +1,21 @@
+@include test-module("align-items") {
+  @include test("test if align-items 'flex-start' works correct.") {
+    @include assert("Outputs prefixes for 'flex-start'") {
+      @include input {
+        @include align-items("-webkit- 2009", "flex-start");
+        @include align-items("-webkit-", "flex-start");
+        @include align-items("-moz-", "flex-start");
+        @include align-items("-ms-", "flex-start");
+        @include align-items("", "flex-start");
+      }
+
+      @include expect {
+        -webkit-box-align: start;
+        -webkit-align-items: flex-start;
+        -moz-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+      }
+    }
+  }
+}
