@@ -18,4 +18,84 @@
       }
     }
   }
+
+  @include test("test if align-items 'flex-end' works correct.") {
+    @include assert("Outputs prefixes for 'flex-end'") {
+      @include input {
+        @include align-items("-webkit- 2009", "flex-end");
+        @include align-items("-webkit-", "flex-end");
+        @include align-items("-moz-", "flex-end");
+        @include align-items("-ms-", "flex-end");
+        @include align-items("", "flex-end");
+      }
+
+      @include expect {
+        -webkit-box-align: end;
+        -webkit-align-items: flex-end;
+        -moz-box-align: end;
+        -ms-flex-align: end;
+        align-items: flex-end;
+      }
+    }
+  }
+
+  @include test("test if align-items 'center' works correct.") {
+    @include assert("Outputs prefixes for 'center'") {
+      @include input {
+        @include align-items("-webkit- 2009", "center");
+        @include align-items("-webkit-", "center");
+        @include align-items("-moz-", "center");
+        @include align-items("-ms-", "center");
+        @include align-items("", "center");
+      }
+
+      @include expect {
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+    }
+  }
+
+  @include test("test if align-items 'baseline' works correct.") {
+    @include assert("Outputs prefixes for 'baseline'") {
+      @include input {
+        @include align-items("-webkit- 2009", "baseline");
+        @include align-items("-webkit-", "baseline");
+        @include align-items("-moz-", "baseline");
+        @include align-items("-ms-", "baseline");
+        @include align-items("", "baseline");
+      }
+
+      @include expect {
+        -webkit-box-align: baseline;
+        -webkit-align-items: baseline;
+        -moz-box-align: baseline;
+        -ms-flex-align: baseline;
+        align-items: baseline;
+      }
+    }
+  }
+
+  @include test("test if align-items 'stretch' works correct.") {
+    @include assert("Outputs prefixes for 'stretch'") {
+      @include input {
+        @include align-items("-webkit- 2009", "stretch");
+        @include align-items("-webkit-", "stretch");
+        @include align-items("-moz-", "stretch");
+        @include align-items("-ms-", "stretch");
+        @include align-items("", "stretch");
+      }
+
+      @include expect {
+        -webkit-box-align: stretch;
+        -webkit-align-items: stretch;
+        -moz-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+      }
+    }
+  }
 }

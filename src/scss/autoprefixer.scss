@@ -1,14 +1,25 @@
 @charset "UTF-8";
 
 /// Autoprefixer
-@mixin autoprefixer() {
+///
+/// @param {String} $property
+@mixin autoprefixer($property, $value) {
+  $property: unquote($property);
 
+  /// TODO add fucntion for list
+  $browserslist: ("-webkit-", "-ms-");
+
+  @if $property == align-content {
+    @each $browsers in $browserslist {
+      @include align-content($browsers, $value);
+    }
+  }
 }
 
 /// Create a alias mixin with a shorter name that passes
 /// through all the arguments to autoprefixer mixin.
 ///
-/// @param {ArgList} $args
-@mixin prefixer($args...) {
-  @include autoprefixer($args...);
+/// @param {String} $property
+@mixin prefixer($property, $value) {
+  @include autoprefixer($property, $value);
 }

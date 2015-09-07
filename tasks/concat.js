@@ -5,7 +5,8 @@ var fs = require('fs'),
   srcFiles = [
     'src/scss/settings/**/*.scss',
     'src/scss/hacks/**/*.scss',
-    'src/scss/helpers/**/*.scss'
+    'src/scss/helpers/**/*.scss',
+    'src/scss/autoprefixer.scss'
   ],
   // Replace all 'use strict' statements in the code with a single one at the top
   processFunc = function(src, filepath) {

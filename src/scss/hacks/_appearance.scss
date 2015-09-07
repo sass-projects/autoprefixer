@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
 @if import-once("appearance") {
+  @mixin appearance($prefix, $value) {
+    $names: ("appearance");
 
+    // Prefix only none value
+    @if $value == none {
+      $prefixed: $prefix + "appearance";
+    } @else {
+      $prefixed: "appearance";
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

@@ -6,7 +6,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/border-radius.json',
-        dest: 'src/scss/can-i-use/features/border-radius.scss'
+        dest: 'precompiled/border-radius.scss'
       }
     ]
   },
@@ -14,7 +14,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-boxshadow.json',
-        dest: 'src/scss/can-i-use/features/css-boxshadow.scss'
+        dest: 'precompiled/css-boxshadow.scss'
       }
     ]
   },
@@ -22,7 +22,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-animation.json',
-        dest: 'src/scss/can-i-use/features/css-animation.scss'
+        dest: 'precompiled/css-animation.scss'
       }
     ]
   },
@@ -30,7 +30,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-transitions.json',
-        dest: 'src/scss/can-i-use/features/css-transitions.scss'
+        dest: 'precompiled/css-transitions.scss'
       }
     ]
   },
@@ -38,7 +38,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/transforms2d.json',
-        dest: 'src/scss/can-i-use/features/transforms2d.scss'
+        dest: 'precompiled/transforms2d.scss'
       }
     ]
   },
@@ -46,7 +46,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/transforms3d.json',
-        dest: 'src/scss/can-i-use/features/transforms3d.scss'
+        dest: 'precompiled/transforms3d.scss'
       }
     ]
   },
@@ -54,7 +54,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-gradients.json',
-        dest: 'src/scss/can-i-use/features/css-gradients.scss'
+        dest: 'precompiled/css-gradients.scss'
       }
     ]
   },
@@ -62,7 +62,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css3-boxsizing.json',
-        dest: 'src/scss/can-i-use/features/css3-boxsizing.scss'
+        dest: 'precompiled/css3-boxsizing.scss'
       }
     ]
   },
@@ -70,7 +70,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-filters.json',
-        dest: 'src/scss/can-i-use/features/css-filters.scss'
+        dest: 'precompiled/css-filters.scss'
       }
     ]
   },
@@ -78,7 +78,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-element-function.json',
-        dest: 'src/scss/can-i-use/features/css-element-function.scss'
+        dest: 'precompiled/css-element-function.scss'
       }
     ]
   },
@@ -86,7 +86,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/multicolumn.json',
-        dest: 'src/scss/can-i-use/features/multicolumn.scss'
+        dest: 'precompiled/multicolumn.scss'
       }
     ]
   },
@@ -94,7 +94,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/user-select-none.json',
-        dest: 'src/scss/can-i-use/features/user-select-none.scss'
+        dest: 'precompiled/user-select-none.scss'
       }
     ]
   },
@@ -102,7 +102,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/flexbox.json',
-        dest: 'src/scss/can-i-use/features/flexbox.scss'
+        dest: 'precompiled/flexbox.scss'
       }
     ]
   },
@@ -110,7 +110,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/calc.json',
-        dest: 'src/scss/can-i-use/features/calc.scss'
+        dest: 'precompiled/calc.scss'
       }
     ]
   },
@@ -118,7 +118,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/background-img-opts.json',
-        dest: 'src/scss/can-i-use/features/background-img-opts.scss'
+        dest: 'precompiled/background-img-opts.scss'
       }
     ]
   },
@@ -126,7 +126,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/font-feature.json',
-        dest: 'src/scss/can-i-use/features/font-feature.scss'
+        dest: 'precompiled/font-feature.scss'
       }
     ]
   },
@@ -134,7 +134,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/border-image.json',
-        dest: 'src/scss/can-i-use/features/border-image.scss'
+        dest: 'precompiled/border-image.scss'
       }
     ]
   },
@@ -142,7 +142,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-selection.json',
-        dest: 'src/scss/can-i-use/features/css-selection.scss'
+        dest: 'precompiled/css-selection.scss'
       }
     ]
   },
@@ -150,7 +150,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-placeholder.json',
-        dest: 'src/scss/can-i-use/features/css-placeholder.scss'
+        dest: 'precompiled/css-placeholder.scss'
       }
     ]
   },
@@ -158,7 +158,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-hyphens.json',
-        dest: 'src/scss/can-i-use/features/css-hyphens.scss'
+        dest: 'precompiled/css-hyphens.scss'
       }
     ]
   },
@@ -166,7 +166,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/fullscreen.json',
-        dest: 'src/scss/can-i-use/features/fullscreen.scss'
+        dest: 'precompiled/fullscreen.scss'
       }
     ]
   },
@@ -174,7 +174,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css3-tabsize.json',
-        dest: 'src/scss/can-i-use/features/css3-tabsize.scss'
+        dest: 'precompiled/css3-tabsize.scss'
       }
     ]
   },
@@ -182,7 +182,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/intrinsic-width.json',
-        dest: 'src/scss/can-i-use/features/intrinsic-width.scss'
+        dest: 'precompiled/intrinsic-width.scss'
       }
     ]
   },
@@ -190,7 +190,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css3-cursors-newer.json',
-        dest: 'src/scss/can-i-use/features/css3-cursors-newer.scss'
+        dest: 'precompiled/css3-cursors-newer.scss'
       }
     ]
   },
@@ -198,7 +198,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-sticky.json',
-        dest: 'src/scss/can-i-use/features/css-sticky.scss'
+        dest: 'precompiled/css-sticky.scss'
       }
     ]
   },
@@ -206,7 +206,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/pointer.json',
-        dest: 'src/scss/can-i-use/features/pointer.scss'
+        dest: 'precompiled/pointer.scss'
       }
     ]
   },
@@ -214,7 +214,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/text-decoration.json',
-        dest: 'src/scss/can-i-use/features/text-decoration.scss'
+        dest: 'precompiled/text-decoration.scss'
       }
     ]
   },
@@ -222,7 +222,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/text-size-adjust.json',
-        dest: 'src/scss/can-i-use/features/text-size-adjust.scss'
+        dest: 'precompiled/text-size-adjust.scss'
       }
     ]
   },
@@ -230,7 +230,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-masks.json',
-        dest: 'src/scss/can-i-use/features/css-masks.scss'
+        dest: 'precompiled/css-masks.scss'
       }
     ]
   },
@@ -238,7 +238,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-boxdecorationbreak.json',
-        dest: 'src/scss/can-i-use/features/css-boxdecorationbreak.scss'
+        dest: 'precompiled/css-boxdecorationbreak.scss'
       }
     ]
   },
@@ -246,7 +246,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/object-fit.json',
-        dest: 'src/scss/can-i-use/features/object-fit.scss'
+        dest: 'precompiled/object-fit.scss'
       }
     ]
   },
@@ -254,7 +254,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-shapes.json',
-        dest: 'src/scss/can-i-use/features/css-shapes.scss'
+        dest: 'precompiled/css-shapes.scss'
       }
     ]
   },
@@ -262,7 +262,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/text-overflow.json',
-        dest: 'src/scss/can-i-use/features/text-overflow.scss'
+        dest: 'precompiled/text-overflow.scss'
       }
     ]
   },
@@ -270,7 +270,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/text-emphasis.json',
-        dest: 'src/scss/can-i-use/features/text-emphasis.scss'
+        dest: 'precompiled/text-emphasis.scss'
       }
     ]
   },
@@ -278,7 +278,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-deviceadaptation.json',
-        dest: 'src/scss/can-i-use/features/css-deviceadaptation.scss'
+        dest: 'precompiled/css-deviceadaptation.scss'
       }
     ]
   },
@@ -286,7 +286,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-media-resolution.json',
-        dest: 'src/scss/can-i-use/features/css-media-resolution.scss'
+        dest: 'precompiled/css-media-resolution.scss'
       }
     ]
   },
@@ -294,7 +294,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-text-align-last.json',
-        dest: 'src/scss/can-i-use/features/css-text-align-last.scss'
+        dest: 'precompiled/css-text-align-last.scss'
       }
     ]
   },
@@ -302,7 +302,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-crisp-edges.json',
-        dest: 'src/scss/can-i-use/features/css-crisp-edges.scss'
+        dest: 'precompiled/css-crisp-edges.scss'
       }
     ]
   },
@@ -310,7 +310,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-logical-props.json',
-        dest: 'src/scss/can-i-use/features/css-logical-props.scss'
+        dest: 'precompiled/css-logical-props.scss'
       }
     ]
   },
@@ -318,7 +318,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-appearance.json',
-        dest: 'src/scss/can-i-use/features/css-appearance.scss'
+        dest: 'precompiled/css-appearance.scss'
       }
     ]
   },
@@ -326,7 +326,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-snappoints.json',
-        dest: 'src/scss/can-i-use/features/css-snappoints.scss'
+        dest: 'precompiled/css-snappoints.scss'
       }
     ]
   },
@@ -334,7 +334,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-regions.json',
-        dest: 'src/scss/can-i-use/features/css-regions.scss'
+        dest: 'precompiled/css-regions.scss'
       }
     ]
   },
@@ -342,7 +342,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-image-set.json',
-        dest: 'src/scss/can-i-use/features/css-image-set.scss'
+        dest: 'precompiled/css-image-set.scss'
       }
     ]
   },
@@ -350,7 +350,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-writing-mode.json',
-        dest: 'src/scss/can-i-use/features/css-writing-mode.scss'
+        dest: 'precompiled/css-writing-mode.scss'
       }
     ]
   },
@@ -358,7 +358,7 @@ module.exports = {
     files: [
       {
         src: 'node_modules/caniuse-db/features-json/css-cross-fade.json.json',
-        dest: 'src/scss/can-i-use/features/css-cross-fade.json.scss'
+        dest: 'precompiled/css-cross-fade.json.scss'
       }
     ]
   },
@@ -368,7 +368,7 @@ module.exports = {
         src: [
           'node_modules/caniuse-db/data.json'
         ],
-        dest: 'src/scss/can-i-use/_data.scss'
+        dest: 'precompiled/can-i-use/_data.scss'
       }
     ]
   },

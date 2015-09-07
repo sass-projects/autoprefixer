@@ -16,7 +16,7 @@
 
     @if $spec == 2009 {
       $prefixed: $prefix + "box-align";
-    } @else if $spec == "2012" {
+    } @else if $spec == 2012 {
       $prefixed: $prefix + "flex-align";
     } @else {
       $prefixed: $prefix + "align-items";

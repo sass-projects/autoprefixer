@@ -477,7 +477,7 @@ $config-namespace: "" !default;
 
     @if $spec == 2009 {
       $prefixed: $prefix + "box-align";
-    } @else if $spec == "2012" {
+    } @else if $spec == 2012 {
       $prefixed: $prefix + "flex-align";
     } @else {
       $prefixed: $prefix + "align-items";
@@ -494,15 +494,67 @@ $config-namespace: "" !default;
 }
 
 @if import-once("align-self") {
+  @mixin align-self($prefix, $value) {
+    $names: ("align-self", "flex-item-align");
 
+    $list: flex-spec($prefix);
+
+    $old-values: (
+      "flex-end":   "end",
+      "flex-start": "start",
+    );
+
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2012 {
+      $prefixed: $prefix + "flex-item-align";
+    } @else {
+      $prefixed: $prefix + "align-self";
+    }
+
+    @if ($spec == 2012) {
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("appearance") {
+  @mixin appearance($prefix, $value) {
+    $names: ("appearance");
 
+    // Prefix only none value
+    @if $value == none {
+      $prefixed: $prefix + "appearance";
+    } @else {
+      $prefixed: "appearance";
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("background-size") {
+  @mixin background-size($prefix, $value) {
+    $names: ("background-size");
 
+    @if $value == none {
+      $prefixed: $prefix + "appearance";
+    } @else {
+      $prefixed: "appearance";
+    }
+
+    // Duplication parameter for -webkit- browsers
+    @if $prefix == "-webkit-" and $value != "contain" and $value != "cover" {
+
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("block-logical") {
@@ -702,4 +754,26 @@ $imported-modules: () !global;
       @return $operator;
     }
   }
+}
+
+/// Autoprefixer
+@mixin autoprefixer($property, $value) {
+  $property: unquote($property);
+
+  /// TODO add fucntion for list
+  $browserslist: ("-webkit-", "-ms-");
+
+  @if $property == align-content {
+    @each $browsers in $browserslist {
+      @include align-content($browsers, $value);
+    }
+  }
+}
+
+/// Create a alias mixin with a shorter name that passes
+/// through all the arguments to autoprefixer mixin.
+///
+/// @param {ArgList} $args
+@mixin prefixer($args...) {
+  @include autoprefixer($args...);
 }
