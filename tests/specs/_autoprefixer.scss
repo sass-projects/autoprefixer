@@ -584,7 +584,16 @@ $config-namespace: "" !default;
 }
 
 @if import-once("border-image") {
+  @mixin border-image($prefix, $value) {
+    @if $prefix != "" {
+      $value: str-replace($value, "fill", "");
+      $value: str-replace($value, "  ", " ");
+    }
 
+    $prefixed: $prefix + "border-image";
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("border-radius") {

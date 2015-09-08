@@ -1,5 +1,36 @@
 @charset "UTF-8";
 
 @if import-once("border-radius") {
+  @mixin border-radius($prefix, $value, $property) {
+    $names: ("border-radius");
 
+    $normal: ();
+    $mozilla: ();
+
+    @each $ver in ("top", "bottom") {
+      @each $hor in ("left", "right") {
+        $prop-normal: "border-#{$ver}-#{$hor}-radius";
+        $prop-mozilla: "border-radius-#{$ver}#{$hor}";
+
+        $normal: map-merge($normal, ($prop-mozilla: $prop-normal));
+        $mozilla: map-merge($mozilla, ($prop-normal: $prop-mozilla));
+      }
+    }
+
+    @if $prefix == "-moz-" {
+      @if map-has-key($mozilla, $propertie) {
+        $prefixed: "";
+      } @else {
+        $prefixed: "";
+      }
+    } @else {
+      @if map-has-key($normal, $propertie) {
+        $prefixed: "";
+      } @else {
+        $prefixed: "";
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

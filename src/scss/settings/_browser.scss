@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /// Default for supported browser
-@include config-set("browsers", "> 1%, last 2 versions, Firefox ESR", true);
+@include config-set("browsers", ("> 1%", "last 2 versions", "Firefox ESR"), true);
 
 // What browsers will be used in `last n version`
 @include config-set("browserslist-major", (
