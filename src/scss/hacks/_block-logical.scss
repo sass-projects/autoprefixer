@@ -1,5 +1,31 @@
 @charset "UTF-8";
 
 @if import-once("block-logical") {
+  @mixin block-logical($prefix, $value, $property) {
+    $names: ("border-block-start",  "border-block-end",
+            "margin-block-start",  "margin-block-end",
+            "padding-block-start", "padding-block-end",
+            "border-before",  "border-after",
+            "margin-before",  "margin-after",
+            "padding-before", "padding-after",);
 
+    $prefixed: $prefix + "background-size";
+    $check: ($prefix == "-webkit-" or $prefix == "-moz-");
+
+    // Use old syntax for -moz- and -webkit-
+    @if $check and str-index($property, "-start") != null {
+      $prefixed: $prefix + str-replace($property, "-block-start", "-before");
+    } @else {
+      $prefixed: $prefix + str-replace($property, "-block-end", "-after");
+    }
+
+    // Return property name by spec
+    @if not $check and str-index($property, "-before") != null {
+      $prefixed: $prefix + str-replace($property, "-before", "-block-start");
+    } @else if not $check {
+      $prefixed: $prefix + str-replace($property, "-after", "-block-end");
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

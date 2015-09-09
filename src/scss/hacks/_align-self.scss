@@ -1,5 +1,31 @@
 @charset "UTF-8";
 
 @if import-once("align-self") {
+  @mixin align-self($prefix, $value) {
+    $names: ("align-self", "flex-item-align");
 
+    $list: flex-spec($prefix);
+
+    $old-values: (
+      "flex-end":   "end",
+      "flex-start": "start",
+    );
+
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2012 {
+      $prefixed: $prefix + "flex-item-align";
+    } @else {
+      $prefixed: $prefix + "align-self";
+    }
+
+    @if ($spec == 2012) {
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

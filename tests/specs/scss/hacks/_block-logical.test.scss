@@ -1,0 +1,31 @@
+@include test-module("block-logical") {
+  @include test("test if block-logical prefix only 'none'.") {
+    @include assert("Outputs prefixes for 'none'") {
+      @include input {
+        @include block-logical("-webkit-", 1px, "margin-block-start");
+        @include block-logical("", 1px, "margin-block-start");
+
+        // @include block-logical("-webkit-", 1px, "margin-inline-start");
+        // @include block-logical("-moz-", 1px, "margin-inline-start");
+        // @include block-logical("", 1px, "margin-inline-start");
+
+        // @include block-logical("-webkit-", 1px, "padding-inline-end");
+        // @include block-logical("-moz-", 1px, "padding-inline-end");
+        // @include block-logical("", 1px, "padding-inline-end");
+      }
+
+      @include expect {
+        -webkit-margin-before: 1px;
+        margin-block-start: 1px;
+
+        // -webkit-margin-start: 1px;
+        // -moz-margin-start: 1px;
+        // margin-inline-start: 1px;
+
+        // -webkit-padding-end: 1px;
+        // -moz-padding-end: 1px;
+        // padding-inline-end: 1px;
+      }
+    }
+  }
+}

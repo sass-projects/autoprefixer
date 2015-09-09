@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
 @if import-once("background-size") {
+  @mixin background-size($prefix, $value) {
+    $names: ("background-size");
 
+    $prefixed: $prefix + "background-size";
+
+    // Duplication parameter for -webkit- browsers
+    @if $prefix == "-webkit-" and $value != "contain" and $value != "cover" {
+      $value: $value + " " + $value;
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }

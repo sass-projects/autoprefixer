@@ -1,0 +1,91 @@
+@include test-module("break-props") {
+  @include test("test if break-props prefix correct.") {
+    @include assert("Outputs prefixes for 'break-inside'") {
+      @include input {
+        @include break-props("-webkit-", auto, break-inside);
+        @include break-props("-moz-", auto, break-inside);
+        @include break-props("", auto, break-inside);
+
+        @include break-props("-webkit-", auto, break-before);
+        @include break-props("-moz-", auto, break-before);
+        @include break-props("", auto, break-before);
+
+        @include break-props("-webkit-", auto, break-after);
+        @include break-props("-moz-", auto, break-after);
+        @include break-props("", auto, break-after);
+      }
+
+      @include expect {
+        -webkit-column-break-inside: auto;
+        page-break-inside: auto;
+        break-inside: auto;
+
+        -webkit-column-break-before: auto;
+        page-break-before: auto;
+        break-before: auto;
+
+        -webkit-column-break-after: auto;
+        page-break-after: auto;
+        break-after: auto;
+      }
+    }
+  }
+
+  @include test("test if break-props prefix 'avoid' value correct.") {
+    @include assert("Outputs prefixes for 'break-inside'") {
+      @include input {
+        @include break-props("-webkit-", avoid, break-inside);
+        @include break-props("-moz-", avoid, break-inside);
+        @include break-props("", avoid, break-inside);
+      }
+
+      @include expect {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  }
+
+  @include test("test if break-props prefix 'avoid-column' value correct.") {
+    @include assert("Outputs prefixes for 'break-inside'") {
+      @include input {
+        @include break-props("-webkit-", avoid-column, break-inside);
+        @include break-props("-moz-", avoid-column, break-inside);
+        @include break-props("", avoid-column, break-inside);
+      }
+
+      @include expect {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid-column;
+      }
+    }
+  }
+
+  @include test("test if break-props prefix 'avoid-page' value correct.") {
+    @include assert("Outputs prefixes for 'break-inside'") {
+      @include input {
+        @include break-props("-moz-", avoid-page, break-inside);
+        @include break-props("", avoid-page, break-inside);
+      }
+
+      @include expect {
+        page-break-inside: avoid;
+        break-inside: avoid-page;
+      }
+    }
+  }
+
+  @include test("test if break-props prefix 'avoid-region' value correct.") {
+    @include assert("Outputs prefixes for 'break-inside'") {
+      @include input {
+        @include break-props("", avoid-region, break-inside);
+      }
+
+      @include expect {
+        break-inside: avoid-region;
+      }
+    }
+  }
+}

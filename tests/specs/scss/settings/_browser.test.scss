@@ -1,6 +1,6 @@
 @include test-module("browser-settings") {
   @include test("config 'browsers' should output default settings.") {
-    $expected: "> 1%, last 2 versions, Firefox ESR";
+    $expected: ("> 1%", "last 2 versions", "Firefox ESR");
     $source: config-get("browsers");
 
     @include assert-equal($source, $expected, "should be '> 1%, last 2 versions, Firefox ESR'.");

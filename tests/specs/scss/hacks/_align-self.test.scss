@@ -1,0 +1,97 @@
+@include test-module("align-self") {
+  @include test("test if align-self 'auto' works correct.") {
+    @include assert("Outputs prefixes for 'auto'") {
+      @include input {
+        @include align-self("-webkit-", "auto");
+        @include align-self("-ms-", "auto");
+        @include align-self("", "auto");
+      }
+
+      @include expect {
+        -webkit-align-self: auto;
+        -ms-flex-item-align: auto;
+        align-self: auto;
+      }
+    }
+  }
+
+  @include test("test if align-self 'flex-start' works correct.") {
+    @include assert("Outputs prefixes for 'flex-start'") {
+      @include input {
+        @include align-self("-webkit-", "flex-start");
+        @include align-self("-ms-", "flex-start");
+        @include align-self("", "flex-start");
+      }
+
+      @include expect {
+        -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+      }
+    }
+  }
+
+  @include test("test if align-self 'flex-end' works correct.") {
+    @include assert("Outputs prefixes for 'flex-end'") {
+      @include input {
+        @include align-self("-webkit-", "flex-end");
+        @include align-self("-ms-", "flex-end");
+        @include align-self("", "flex-end");
+      }
+
+      @include expect {
+        -webkit-align-self: flex-end;
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+      }
+    }
+  }
+
+  @include test("test if align-self 'center' works correct.") {
+    @include assert("Outputs prefixes for 'center'") {
+      @include input {
+        @include align-self("-webkit-", "center");
+        @include align-self("-ms-", "center");
+        @include align-self("", "center");
+      }
+
+      @include expect {
+        -webkit-align-self: center;
+        -ms-flex-item-align: center;
+        align-self: center;
+      }
+    }
+  }
+
+  @include test("test if align-self 'baseline' works correct.") {
+    @include assert("Outputs prefixes for 'baseline'") {
+      @include input {
+        @include align-self("-webkit-", "baseline");
+        @include align-self("-ms-", "baseline");
+        @include align-self("", "baseline");
+      }
+
+      @include expect {
+        -webkit-align-self: baseline;
+        -ms-flex-item-align: baseline;
+        align-self: baseline;
+      }
+    }
+  }
+
+  @include test("test if align-self 'stretch' works correct.") {
+    @include assert("Outputs prefixes for 'stretch'") {
+      @include input {
+        @include align-self("-webkit-", "stretch");
+        @include align-self("-ms-", "stretch");
+        @include align-self("", "stretch");
+      }
+
+      @include expect {
+        -webkit-align-self: stretch;
+        -ms-flex-item-align: stretch;
+        align-self: stretch;
+      }
+    }
+  }
+}

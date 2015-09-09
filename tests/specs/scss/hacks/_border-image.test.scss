@@ -1,0 +1,15 @@
+@include test-module("border-image") {
+  @include test("test if border-image remove fill on prefixed properties.") {
+    @include assert("Outputs prefixes for 'none'") {
+      @include input {
+        @include border-image("-o-", url('a.png') 20% fill stretch stretch);
+        @include border-image("", url('a.png') 20% fill stretch stretch);
+      }
+
+      @include expect {
+        -o-border-image: url('a.png') 20% stretch stretch;
+        border-image: url('a.png') 20% fill stretch stretch;
+      }
+    }
+  }
+}

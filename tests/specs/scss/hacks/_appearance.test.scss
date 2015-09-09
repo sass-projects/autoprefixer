@@ -1,0 +1,21 @@
+@include test-module("appearance") {
+  @include test("test if appearance prefix only 'none'.") {
+    @include assert("Outputs prefixes for 'none'") {
+      @include input {
+        @include appearance("-webkit-", "none");
+        @include appearance("-moz-", "none");
+        @include appearance("-webkit-", "auto");
+        @include appearance("-moz-", "auto");
+        @include appearance("", "none");
+      }
+
+      @include expect {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: auto;
+        appearance: auto;
+        appearance: none;
+      }
+    }
+  }
+}

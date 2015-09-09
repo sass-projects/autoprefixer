@@ -1,0 +1,14 @@
+@include test-module("autoprefixer") {
+  @include test("check if we can call all hacks.") {
+    @include assert("Outputs align-content prefixes for'flex-start'") {
+      @include input {
+        @include autoprefixer("align-content", "flex-start");
+      }
+
+      @include expect {
+        -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+      }
+    }
+  }
+}

@@ -360,7 +360,7 @@ $config-namespace: "" !default;
 }
 
 /// Default for supported browser
-@include config-set("browsers", "> 1%, last 2 versions, Firefox ESR", true);
+@include config-set("browsers", ("> 1%", "last 2 versions", "Firefox ESR"), true);
 
 // What browsers will be used in `last n version`
 @include config-set("browserslist-major", (
@@ -391,9 +391,6 @@ $config-namespace: "" !default;
 
 // Aliases ot work with joined versions like `ios_saf 7.0-7.1`
 @include config-set("browserslist-version-aliases", (), true);
-
-@include config-set("declaration.prefixed", "", true);
-@include config-set("declaration.normalize", "", true);
 
 
 /// Selector hacks
@@ -434,7 +431,7 @@ $config-namespace: "" !default;
 @include config-set("transform-value", true, true);
 
 @if import-once("align-content") {
-  @mixin align-content ($prefix, $value) {
+  @mixin align-content($prefix, $value) {
     $names: ("align-content", "flex-line-pack");
 
     $list: flex-spec($prefix);
@@ -465,35 +462,213 @@ $config-namespace: "" !default;
 }
 
 @if import-once("align-items") {
+  @mixin align-items($prefix, $value) {
+    $names: ("align-items", "flex-align", "box-align");
 
+    $list: flex-spec($prefix);
+
+    $old-values: (
+      "flex-end":   "end",
+      "flex-start": "start",
+    );
+
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2009 {
+      $prefixed: $prefix + "box-align";
+    } @else if $spec == 2012 {
+      $prefixed: $prefix + "flex-align";
+    } @else {
+      $prefixed: $prefix + "align-items";
+    }
+
+    @if ($spec == 2009 or $spec == 2012) {
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("align-self") {
+  @mixin align-self($prefix, $value) {
+    $names: ("align-self", "flex-item-align");
 
+    $list: flex-spec($prefix);
+
+    $old-values: (
+      "flex-end":   "end",
+      "flex-start": "start",
+    );
+
+    $spec: nth($list, 1);
+    $prefix: nth($list, 2);
+
+    @if $spec == 2012 {
+      $prefixed: $prefix + "flex-item-align";
+    } @else {
+      $prefixed: $prefix + "align-self";
+    }
+
+    @if ($spec == 2012) {
+      @if map-has-key($old-values, $value) {
+        $value: map-get($old-values, $value);
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("appearance") {
+  @mixin appearance($prefix, $value) {
+    $names: ("appearance");
 
+    // Prefix only none value
+    @if $value == none {
+      $prefixed: $prefix + "appearance";
+    } @else {
+      $prefixed: "appearance";
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("background-size") {
+  @mixin background-size($prefix, $value) {
+    $names: ("background-size");
 
+    $prefixed: $prefix + "background-size";
+
+    // Duplication parameter for -webkit- browsers
+    @if $prefix == "-webkit-" and $value != "contain" and $value != "cover" {
+      $value: $value + " " + $value;
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("block-logical") {
+  @mixin block-logical($prefix, $value, $property) {
+    $names: ("border-block-start",  "border-block-end",
+            "margin-block-start",  "margin-block-end",
+            "padding-block-start", "padding-block-end",
+            "border-before",  "border-after",
+            "margin-before",  "margin-after",
+            "padding-before", "padding-after",);
 
+    $prefixed: $prefix + "background-size";
+    $check: ($prefix == "-webkit-" or $prefix == "-moz-");
+
+    // Use old syntax for -moz- and -webkit-
+    @if $check and str-index($property, "-start") != null {
+      $prefixed: $prefix + str-replace($property, "-block-start", "-before");
+    } @else {
+      $prefixed: $prefix + str-replace($property, "-block-end", "-after");
+    }
+
+    // Return property name by spec
+    @if not $check and str-index($property, "-before") != null {
+      $prefixed: $prefix + str-replace($property, "-before", "-block-start");
+    } @else if not $check {
+      $prefixed: $prefix + str-replace($property, "-after", "-block-end");
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("border-image") {
+  @mixin border-image($prefix, $value) {
+    $names: ("border-image");
 
+    @if $prefix != "" {
+      $value: str-replace($value, "fill", "");
+      // Fix spaces
+      $value: str-replace($value, "  ", " ");
+    }
+
+    $prefixed: $prefix + "border-image";
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("border-radius") {
+  @mixin border-radius($prefix, $value, $property) {
+    $names: ("border-radius");
 
+    $normal: ();
+    $mozilla: ();
+
+    @each $ver in ("top", "bottom") {
+      @each $hor in ("left", "right") {
+        $prop-normal: "border-#{$ver}-#{$hor}-radius";
+        $prop-mozilla: "border-radius-#{$ver}#{$hor}";
+
+        $normal: map-merge($normal, ($prop-mozilla: $prop-normal));
+        $mozilla: map-merge($mozilla, ($prop-normal: $prop-mozilla));
+      }
+    }
+
+    @if $prefix == "-moz-" {
+      @if map-has-key($mozilla, $property) {
+        $prefixed: $prefix + map-get($mozilla, $property);
+      } @else {
+        $prefixed: $prefix + $property;
+      }
+    } @else {
+      @if map-has-key($normal, $property) {
+        $prefixed: $prefix + map-get($normal, $property);
+      } @else {
+        $prefixed: $prefix + $property;
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("break-props") {
+  @mixin break-props($prefix, $value, $property) {
+    $names: ("break-inside", "page-break-inside", "column-break-inside",
+            "break-before", "page-break-before", "column-break-before",
+            "break-after",  "page-break-after",  "column-break-after");
 
+    // Change name for -webkit- and -moz- prefix
+    @if $prefix == "-webkit-" {
+      $property: $prefix + "column-" + $property;
+    } @else if $prefix == "-moz-" {
+      $property: "page-" + $property;
+    }
+
+    // Return property name by final spec
+    @if str-index($property, "inside") != null and $prefix == "" {
+      $prefixed: "break-inside";
+    } @else if str-index($property, "before") != null and $prefix == "" {
+      $prefixed: "break-before";
+    } @else if str-index($property, "after") != null and $prefix == "" {
+      $prefixed: "break-after";
+    } @else {
+      $prefixed: $property;
+    }
+
+    // Change prefixed value for avoid-column and avoid-page
+    @if $prefix != "" and ((str-index($property, "break-inside") != null and $value == "avoid-column") or $value == "avoid-page") {
+      $value: "avoid";
+    }
+
+    @if (str-index($property, "break-inside") != null or $value == "avoid-region" or ($value == "avoid-page" and $prefix == "-webkit-")) {
+      #{$prefixed}: unquote($value);
+    } @else {
+      #{$property}: unquote($value);
+    }
+  }
 }
 
 @if import-once("cross-fade") {
@@ -677,4 +852,71 @@ $imported-modules: () !global;
       @return $operator;
     }
   }
+}
+
+/// Replace in a string
+///
+/// @param {String}  $string    String that you want to replace
+/// @param {String}  $substr    String that is to be replaced by `$newsubstr`
+/// @param {String}  $newsubstr String that replaces `$substr`
+/// @param {Number*} $all       Flag for replaceing all (1+) or not (0)
+///
+/// @return {String}
+@function str-replace($string, $substr, $newsubstr, $all: 0) {
+  $string: unquote($string);
+  $substr: unquote($substr);
+  $newsubstr: unquote($newsubstr);
+
+  $position-found: str-index($string, $substr);
+  $processed: ();
+
+  @while ($position-found and $position-found > 0) {
+    $length-substr: str-length($substr);
+
+    @if (1 != $position-found) {
+      $processed: append($processed, str-slice($string, 0, $position-found - 1));
+    }
+
+    $processed: append($processed, $newsubstr);
+    $string: str-slice($string, $position-found + $length-substr);
+
+    $position-found: 0;
+
+    @if ($all > 0) {
+      $position-found: str-index($string, $substr);
+    }
+  }
+
+  $processed: append($processed, $string);
+  $string: "";
+
+  @each $s in $processed {
+    $string: #{$string}#{$s};
+  }
+
+  @return $string;
+}
+
+/// Autoprefixer
+///
+/// @param {String} $property
+@mixin autoprefixer($property, $value) {
+  $property: unquote($property);
+
+  /// TODO add fucntion for list
+  $browserslist: ("-webkit-", "-ms-");
+
+  @if $property == align-content {
+    @each $browsers in $browserslist {
+      @include align-content($browsers, $value);
+    }
+  }
+}
+
+/// Create a alias mixin with a shorter name that passes
+/// through all the arguments to autoprefixer mixin.
+///
+/// @param {String} $property
+@mixin prefixer($property, $value) {
+  @include autoprefixer($property, $value);
 }

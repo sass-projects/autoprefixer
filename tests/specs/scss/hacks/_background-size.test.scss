@@ -1,0 +1,33 @@
+@include test-module("background-size") {
+  @include test("test if background-size prefix only 'contain'.") {
+    @include assert("Outputs prefixes for 'contain'") {
+      @include input {
+        @include background-size("-webkit-", "contain");
+        @include background-size("-moz-", "contain");
+        @include background-size("", "contain");
+      }
+
+      @include expect {
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        background-size: contain
+      }
+    }
+  }
+
+  @include test("test if background-size prefix 'numbers' and duplicates the number for '-webkit-'.") {
+    @include assert("Outputs prefixes for 'contain'") {
+      @include input {
+        @include background-size("-webkit-", 20px);
+        @include background-size("-moz-", 20px);
+        @include background-size("", 20px);
+      }
+
+      @include expect {
+        -webkit-background-size: 20px 20px;
+        -moz-background-size: 20px;
+        background-size: 20px
+      }
+    }
+  }
+}
