@@ -1,5 +1,38 @@
 @charset "UTF-8";
 
 @if import-once("break-props") {
+  @mixin break-props($prefix, $value, $property) {
+    $names: ("break-inside", "page-break-inside", "column-break-inside",
+            "break-before", "page-break-before", "column-break-before",
+            "break-after",  "page-break-after",  "column-break-after");
 
+    // Change name for -webkit- and -moz- prefix
+    @if $prefix == "-webkit-" {
+      $property: $prefix + "column-" + $property;
+    } @else if $prefix == "-moz-" {
+      $property: "page-" + $property;
+    }
+
+    // Return property name by final spec
+    @if str-index($property, "inside") != null and $prefix == "" {
+      $prefixed: "break-inside";
+    } @else if str-index($property, "before") != null and $prefix == "" {
+      $prefixed: "break-before";
+    } @else if str-index($property, "after") != null and $prefix == "" {
+      $prefixed: "break-after";
+    } @else {
+      $prefixed: $property;
+    }
+
+    // Change prefixed value for avoid-column and avoid-page
+    @if $prefix != "" and ((str-index($property, "break-inside") != null and $value == "avoid-column") or $value == "avoid-page") {
+      $value: "avoid";
+    }
+
+    @if (str-index($property, "break-inside") != null or $value == "avoid-region" or ($value == "avoid-page" and $prefix == "-webkit-")) {
+      #{$prefixed}: unquote($value);
+    } @else {
+      #{$property}: unquote($value);
+    }
+  }
 }

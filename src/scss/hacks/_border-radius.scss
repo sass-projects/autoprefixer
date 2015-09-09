@@ -18,16 +18,16 @@
     }
 
     @if $prefix == "-moz-" {
-      @if map-has-key($mozilla, $propertie) {
-        $prefixed: "";
+      @if map-has-key($mozilla, $property) {
+        $prefixed: $prefix + map-get($mozilla, $property);
       } @else {
-        $prefixed: "";
+        $prefixed: $prefix + $property;
       }
     } @else {
-      @if map-has-key($normal, $propertie) {
-        $prefixed: "";
+      @if map-has-key($normal, $property) {
+        $prefixed: $prefix + map-get($normal, $property);
       } @else {
-        $prefixed: "";
+        $prefixed: $prefix + $property;
       }
     }
 

@@ -360,7 +360,7 @@ $config-namespace: "" !default;
 }
 
 /// Default for supported browser
-@include config-set("browsers", "> 1%, last 2 versions, Firefox ESR", true);
+@include config-set("browsers", ("> 1%", "last 2 versions", "Firefox ESR"), true);
 
 // What browsers will be used in `last n version`
 @include config-set("browserslist-major", (
@@ -585,8 +585,11 @@ $config-namespace: "" !default;
 
 @if import-once("border-image") {
   @mixin border-image($prefix, $value) {
+    $names: ("border-image");
+
     @if $prefix != "" {
       $value: str-replace($value, "fill", "");
+      // Fix spaces
       $value: str-replace($value, "  ", " ");
     }
 
@@ -597,11 +600,75 @@ $config-namespace: "" !default;
 }
 
 @if import-once("border-radius") {
+  @mixin border-radius($prefix, $value, $property) {
+    $names: ("border-radius");
 
+    $normal: ();
+    $mozilla: ();
+
+    @each $ver in ("top", "bottom") {
+      @each $hor in ("left", "right") {
+        $prop-normal: "border-#{$ver}-#{$hor}-radius";
+        $prop-mozilla: "border-radius-#{$ver}#{$hor}";
+
+        $normal: map-merge($normal, ($prop-mozilla: $prop-normal));
+        $mozilla: map-merge($mozilla, ($prop-normal: $prop-mozilla));
+      }
+    }
+
+    @if $prefix == "-moz-" {
+      @if map-has-key($mozilla, $property) {
+        $prefixed: $prefix + map-get($mozilla, $property);
+      } @else {
+        $prefixed: $prefix + $property;
+      }
+    } @else {
+      @if map-has-key($normal, $property) {
+        $prefixed: $prefix + map-get($normal, $property);
+      } @else {
+        $prefixed: $prefix + $property;
+      }
+    }
+
+    #{$prefixed}: unquote($value);
+  }
 }
 
 @if import-once("break-props") {
+  @mixin break-props($prefix, $value, $property) {
+    $names: ("break-inside", "page-break-inside", "column-break-inside",
+            "break-before", "page-break-before", "column-break-before",
+            "break-after",  "page-break-after",  "column-break-after");
 
+    // Change name for -webkit- and -moz- prefix
+    @if $prefix == "-webkit-" {
+      $property: $prefix + "column-" + $property;
+    } @else if $prefix == "-moz-" {
+      $property: "page-" + $property;
+    }
+
+    // Return property name by final spec
+    @if str-index($property, "inside") != null and $prefix == "" {
+      $prefixed: "break-inside";
+    } @else if str-index($property, "before") != null and $prefix == "" {
+      $prefixed: "break-before";
+    } @else if str-index($property, "after") != null and $prefix == "" {
+      $prefixed: "break-after";
+    } @else {
+      $prefixed: $property;
+    }
+
+    // Change prefixed value for avoid-column and avoid-page
+    @if $prefix != "" and ((str-index($property, "break-inside") != null and $value == "avoid-column") or $value == "avoid-page") {
+      $value: "avoid";
+    }
+
+    @if (str-index($property, "break-inside") != null or $value == "avoid-region" or ($value == "avoid-page" and $prefix == "-webkit-")) {
+      #{$prefixed}: unquote($value);
+    } @else {
+      #{$property}: unquote($value);
+    }
+  }
 }
 
 @if import-once("cross-fade") {

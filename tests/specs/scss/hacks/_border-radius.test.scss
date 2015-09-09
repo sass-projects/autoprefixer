@@ -2,17 +2,17 @@
   @include test("test if border-radius prefix old '-moz-' property.") {
     @include assert("Outputs prefixes for 'none'") {
       @include input {
-        @include border-radius("-webkit-", border-radius: 5px);
-        @include border-radius("-moz-", border-radius: 5px);
-        @include border-radius("", border-radius: 5px);
+        @include border-radius("-webkit-", 5px, border-radius);
+        @include border-radius("-moz-", 5px, border-radius);
+        @include border-radius("", 5px, border-radius);
 
-        @include border-radius("-webkit-", border-top-left-radius: 3px);
-        @include border-radius("-moz-", border-top-left-radius: 3px);
-        @include border-radius("", border-top-left-radius: 3px);
+        @include border-radius("-webkit-", 3px, border-top-left-radius);
+        @include border-radius("-moz-", 3px, border-top-left-radius);
+        @include border-radius("", 3px, border-top-left-radius);
 
-        @include border-radius("-webkit-", border-bottom-right-radius: 3px);
-        @include border-radius("-moz-", border-bottom-right-radius: 3px);
-        @include border-radius("", border-bottom-right-radius: 3px);
+        @include border-radius("-webkit-", 3px, border-bottom-right-radius);
+        @include border-radius("-moz-", 3px, border-bottom-right-radius);
+        @include border-radius("", 3px, border-bottom-right-radius);
       }
 
       @include expect {
